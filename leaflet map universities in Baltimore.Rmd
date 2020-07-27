@@ -1,0 +1,33 @@
+---
+title: "leaflet map"
+author: "xueyan zhang"
+date: "7/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### generating data of universities in Baltimore
+```{r location data}
+latlngdata <- data.frame(
+        lat=c(39.3288851,39.291389,39.392778,39.346111),
+        lng=c(-76.6206598,-76.625,-76.604722,-76.618889),
+        enrollment=c(18753,5874,20124,6028))
+popupdata <- c(
+        "<a href='https://en.wikipedia.org/wiki/Johns_Hopkins_University'>Johns Hopkins University</a>",
+        "<a href='https://en.wikipedia.org/wiki/University_of_Maryland,_Baltimore'>University of Maryland</a>",
+        "<a href='https://en.wikipedia.org/wiki/Towson_University'>Towson University</a>",
+        "<a href='https://en.wikipedia.org/wiki/Loyola_University_Maryland'>Loyola University Maryland</a>")
+```
+
+#### plotting
+```{r}
+library(leaflet)
+latlngdata %>%
+        leaflet() %>%
+	addTiles() %>%
+        addMarkers(popup = popupdata) %>%
+        addCircles(weight=1,radius = sqrt(latlngdata$enrollment)*10)
+```
